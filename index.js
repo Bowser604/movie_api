@@ -1,9 +1,16 @@
 const express = require('express');
   morgan = require('morgan');
+  fs = require('fs'), // import built in node modules fs and path 
+  path = require('path');
 
 const app = express();
+// create a write stream (in append mode)
+// a ‘log.txt’ file is created in root directory
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 
-app.use(morgan('common'));
+// setup the logger
+app.use(morgan('combined', {stream: accessLogStream}));
+
 
 app.get('/', (req, res) => {
   res.send('Welcome to my app!');
