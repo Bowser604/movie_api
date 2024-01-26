@@ -24,4 +24,3 @@ app.listen(8080, () => {
   console.log('Your app is listening on port 8080.');
 });
 
-// $ npm install morgan
