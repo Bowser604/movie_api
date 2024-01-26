@@ -31,7 +31,7 @@ app.get('/movies', (req, res) => {
 
 // Default routes
 app.get('/', (req, res) => {
-  res.send('Welcome to my app!');
+  res.send('Welcome to my movie app!');
 });
 
 app.get('/secreturl', (req, res) => {
