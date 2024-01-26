@@ -1,14 +1,16 @@
 const express = require('express');
 const morgan = require('morgan');
-const fs = require('fs'), // import built in node modules fs and path 
+// const fs = require('fs'), // import built in node modules fs and path 
 const path = require('path');
 
 const app = express();
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
+const accessLogStream = morgan('combined', {
+  stream: fs.creatWriteStream(path.join(--dirname, 'log.txt'), {flags: 'a'})
+});
 // setup the logger
-app.use(morgan('combined', {stream: accessLogStream}));
+app.use(morgan('combined', {stream: accessLogStream);
 
 const top10Movies = [
   { title: 'Snatch', year: 2000 },
