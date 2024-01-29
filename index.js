@@ -10,8 +10,8 @@ const accessLogStream = morgan('combined', {
   stream: fs.creatWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 });
 
+app.use(morgan('dev'));
 app.use(accessLogStream);
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 const top10Movies = [
