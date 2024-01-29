@@ -7,7 +7,7 @@ const app = express();
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
 const accessLogStream = morgan('combined', {
-  stream: fs.creatWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
+  stream: fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 });
 
 app.use(morgan('dev'));
