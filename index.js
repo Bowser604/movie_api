@@ -7,11 +7,19 @@ const app = express();
 // create a write stream (in append mode)
 // a ‘log.txt’ file is created in root directory
 const accessLogStream = morgan('combined', {
+<<<<<<< Updated upstream
   stream: fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 });
 
 app.use(morgan('dev'));
 app.use(accessLogStream);
+=======
+  stream: fs.creatWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
+});
+
+app.use(accessLogStream);
+
+>>>>>>> Stashed changes
 app.use(express.static(path.join(__dirname, 'public')));
 
 const top10Movies = [
@@ -45,5 +53,9 @@ app.get('/secreturl', (req, res) => {
 // Start the server on port 8080
 app.listen(8080, () => {
   console.log('Your app is listening on port 8080.');
+<<<<<<< Updated upstream
 });
 
+=======
+});
+>>>>>>> Stashed changes
