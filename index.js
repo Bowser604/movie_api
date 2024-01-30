@@ -11,7 +11,7 @@ const accessLogStream = morgan('combined', {
   stream: fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
 });
 
-app.use(morgan('dev'));
+app.use(morgan("common"));
 app.use(accessLogStream);
 =======
   stream: fs.creatWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'})
