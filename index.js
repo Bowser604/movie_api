@@ -50,7 +50,7 @@ let top10Movies = [
     year: 1988 
   },
 ]
-app.use(morgan('combined', {stream: accessLogStream}));
+app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
 
 // app.use(morgan("common"));
