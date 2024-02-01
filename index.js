@@ -53,11 +53,9 @@ let top10Movies = [
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
 
-// app.use(morgan("common"));
+app.use(morgan("common"));
 // app.use(accessLogStream);
-
 // app.use(express.static(path.join(__dirname, 'public')));
-
 
 // GET route for "/movies" 
 app.get('/movies', (req, res) => {
