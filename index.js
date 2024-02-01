@@ -1,6 +1,6 @@
-const express = require('express');
-  morgan = require('morgan');
-  fs = require('fs'); // import built in node modules fs and path 
+const express = require('express'),
+  morgan = require('morgan'),
+  fs = require('fs'), // import built in node modules fs and path 
   path = require('path');
 
 const app = express();
