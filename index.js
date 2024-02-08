@@ -54,23 +54,17 @@ app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
 
 app.use(morgan("common"));
-// app.use(accessLogStream);
-// app.use(express.static(path.join(__dirname, 'public')));
 
 // GET route for "/movies" 
 app.get('/movies', (req, res) => {
   // Return a JSON object containing data about the top 10 movies
-  res.json({ topMovies: top10Movies });
+  res.json( top10Movies );
 });
     
 // Default routes
 app.get('/', (req, res) => {
   res.send('Welcome to my movie app!');
 });
-
-// app.get('/secreturl', (req, res) => {
-//   res.send('This is a secret url with super top-secret content.');
-// });
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
