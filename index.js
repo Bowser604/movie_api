@@ -1,7 +1,13 @@
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
+
+const app = express();
+
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +28,7 @@ let users = [
     name: "Nick",
     favMovies: ['Inception']
   }
-]
+];
 
 let topMovies = [
   { 
@@ -155,11 +161,12 @@ let topMovies = [
     'Birth':'January 8, 1951',
   }
 },
-]
-app.use(morgan('combined', { stream: accessLogStream }));
-app.use(express.static('public'));
+];
 
-app.use(morgan("common"));
+app.use(morgan('combined', { stream: accessLogStream }));
+// app.use(express.static('public'));
+
+// app.use(morgan("common"));
 // app.use(accessLogStream);
 // app.use(express.static(path.join(__dirname, 'public')));
 
