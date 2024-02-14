@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
-const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
+// const morgan = require('morgan');
+// const fs = require('fs');
+// const path = require('path');
 
 const app = express();
 
@@ -28,7 +28,7 @@ let users = [
     name: "Nick",
     favMovies: ['Inception']
   }
-];
+]
 
 let topMovies = [
   { 
@@ -160,30 +160,60 @@ let topMovies = [
     'Bio':'John Campbell McTiernan Jr. is an American filmmaker. He is best known for his action films, including Predator, Die Hard, and The Hunt for Red October.',
     'Birth':'January 8, 1951',
   }
-},
+}
 ];
 
-app.use(morgan('combined', { stream: accessLogStream }));
+// app.use(morgan('combined', { stream: accessLogStream }));
 // app.use(express.static('public'));
 
 // app.use(morgan("common"));
 // app.use(accessLogStream);
 // app.use(express.static(path.join(__dirname, 'public')));
 
-// GET route for "/movies" 
-app.get('/movies', (req, res) => {
-  // Return a JSON object containing data about the top 10 movies
-  res.json({ topMovies: topMovies });
+
+//READ
+app.get('/', (req, res) => {
+  res.send('My to top 10 movies list!');
 });
-    
+
+// READ
+app.get('/movies', (req, res) => {
+    res.status(200).json(topMovies);
+});
+
+// READ
+app.get('/movies/:title', (req, res) => {
+    const { title } =req.params;
+    const movie = topMovies.find( movie => movie.Title === title );
+   
+    if (movie) {
+      res.status(200).json(movie);
+    } else {
+      res.status(400).send('no such movie');
+    }
+  });
+
+// READ
+app.get('/movies/genre/:genreName', (req, res) => {
+  const { genreName } = req.params;
+  const genre = topMovies.find( movie => movie.Genre.Name === genreName ).Genre;
+ 
+  if (genre){
+    res.status(200).json(genre);
+  } else {
+    res.status(400).send('no such genre');
+  }
+  });
+  
+
 // Default routes
 app.get('/', (req, res) => {
   res.send('Welcome to my movie app!');
 });
 
-// app.get('/secreturl', (req, res) => {
-//   res.send('This is a secret url with super top-secret content.');
-// });
+app.get('/secreturl', (req, res) => {
+  res.send('This is a secret url with super top-secret content.');
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -191,8 +221,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server on port 8080
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
-});
+app.listen(8080, () => console.log('listening on 8080.'))
 
 
