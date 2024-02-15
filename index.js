@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
-// const morgan = require('morgan');
-// const fs = require('fs');
-// const path = require('path');
-
 const app = express();
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
+
+
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
 
@@ -163,13 +164,42 @@ let topMovies = [
 }
 ];
 
-// app.use(morgan('combined', { stream: accessLogStream }));
+app.use(morgan('combined', { stream: accessLogStream }));
 // app.use(express.static('public'));
 
 // app.use(morgan("common"));
 // app.use(accessLogStream);
 // app.use(express.static(path.join(__dirname, 'public')));
 
+// CREATE
+app.post('/user', (req, res) => {
+  const newUser = req.body;
+
+  if (newUser.name) {
+    newUser.id = uuid.v4();
+    users.push(newUser);
+    res.status(201).json(newUser)
+  } else {
+    res.status(400).send('users need names')
+  }
+  
+})
+
+// UPDATE
+app.put('/user/:id', (req, res) => {
+  const { id } =req.params;
+  const updatedUser = req.body;
+
+  let user = users.find( user => user.id == id );
+  
+  if (user) {
+    user.name = updatedUser.name;
+    res.status(200).json(user);
+  } else {
+    res.status(400).send('no such user')
+  }
+
+})
 
 //READ
 app.get('/', (req, res) => {
