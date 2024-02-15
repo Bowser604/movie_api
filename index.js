@@ -1,71 +1,35 @@
-<<<<<<< Updated upstream
-const express = require('express'),
-  morgan = require('morgan'),
-  fs = require('fs'), // import built in node modules fs and path 
-  path = require('path');
-
-const app = express();
-=======
 const express = require('express');
       bodyParser = require('body-parser');
       uuid = require('uuid');
       app = express();
-// const morgan = require('morgan');
+const morgan = require('morgan');
 const fs = require('fs');
-// const path = require('path');
+const path = require('path');
 
 
->>>>>>> Stashed changes
 
 // const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-let top10Movies = [
-  { 
-    title: 'Snatch',
-    year: 2000 
+let users = [
+  {
+    id:1,
+    name: "Kim",
+    favMovies: []
+},
+{
+  id:2,
+    name: "Lea",
+    favMovies: ['Under The Shadow']
   },
   {
-    title: 'Sicario', 
-    year: 2015 
-  },
-  { 
-    title: 'Lock, Stock and Two Smoking Barrels', 
-    year: 1998 
-  },
-  { 
-    title: 'Gladiator', 
-    year: 2000 
-  },
-  { 
-    title: 'Rurouni Kenshin 3',
-    year: 2014 
-  },
-  {
-    title: 'Blade Of The Immortal',
-    year: 2017 
-  },
-  {
-    title: 'Pulp Fiction', 
-    year: 1994 
-  },
-  { 
-    title: 'Saving Private Ryan',
-    year: 1998 
-  },
-  { 
-    title: 'Raiders Of The Lost Ark ', 
-    year: 1981 
-  },
-  { 
-    title: 'Die Hard', 
-    year: 1988 
-  },
+    id:3,
+    name: "Nick",
+    favMovies: ['Inception']
+  }
 ]
-<<<<<<< Updated upstream
-app.use(morgan('combined', { stream: accessLogStream }));
-app.use(express.static('public'));
-=======
 
 let topMovies = [
   { 
@@ -202,13 +166,11 @@ let topMovies = [
 
 // app.use(morgan('combined', { stream: accessLogStream }));
 // app.use(express.static('public'));
->>>>>>> Stashed changes
 
-app.use(morgan("common"));
+// app.use(morgan("common"));
+// app.use(accessLogStream);
+// app.use(express.static(path.join(__dirname, 'public')));
 
-<<<<<<< Updated upstream
-// GET route for "/movies" 
-=======
 // CREATE
 app.post('/users', (req, res) => {
   const newUser = req.body;
@@ -245,19 +207,9 @@ app.get('/', (req, res) => {
 });
 
 // READ
->>>>>>> Stashed changes
 app.get('/movies', (req, res) => {
-  // Return a JSON object containing data about the top 10 movies
-  res.json( top10Movies );
+    res.status(200).json(topMovies);
 });
-<<<<<<< Updated upstream
-    
-// Default routes
-app.get('/', (req, res) => {
-  res.send('Welcome to my movie app!');
-});
-
-=======
 
 // READ
 app.get('/movies/:title', (req, res) => {
@@ -306,15 +258,12 @@ app.get('/secreturl', (req, res) => {
 });
 
 
->>>>>>> Stashed changes
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something Went Wrong!');
 });
 
 // Start the server on port 8080
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
-});
+app.listen(8080, () => console.log('listening on 8080.'))
 
 
