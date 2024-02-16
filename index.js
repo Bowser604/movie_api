@@ -1,14 +1,13 @@
-const express = require('express');
-      bodyParser = require('body-parser');
-      uuid = require('uuid');
-      app = express();
-const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
+const  express = require('express');
+const  bodyParser = require('body-parser');
+const  app = express();
+const  morgan = require('morgan');
+const  fs = require('fs');
+const  path = require('path');
 
 
 
-// const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -164,7 +163,7 @@ let topMovies = [
 }
 ];
 
-// app.use(morgan('combined', { stream: accessLogStream }));
+app.use(morgan('combined', { stream: accessLogStream }));
 // app.use(express.static('public'));
 
 // app.use(morgan("common"));
@@ -198,7 +197,48 @@ app.put('/users/:id', (req, res) => {
   } else {
     res.status(400).send('no such user')
   }
+})
 
+// CREATE
+app.post('/users/:id/;movieTitle', (req, res) => {
+  const { id, movieTitle } =req.params;
+
+  let user = users.find( user => user.id == id );
+  
+  if (user) {
+    user.favoriteMovies.push(movieTitle);
+    res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);;
+  } else {
+    res.status(400).send('no such user')
+  }
+})
+
+// Delete
+app.delete('/users/:id/;movieTitle', (req, res) => {
+  const { id, movieTitle } =req.params;
+
+  let user = users.find( user => user.id == id );
+  
+  if (user) {
+    user.favoriteMovies.user.favoriteMovies.filter( title => title !== movieTitle);
+    res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);;
+  } else {
+    res.status(400).send('no such user')
+  }
+})
+
+// Delete
+app.delete('/users/:id/;movieTitle', (req, res) => {
+  const { id, movieTitle } =req.params;
+
+  let user = users.find( user => user.id == id );
+  
+  if (user) {
+    user.favoriteMovies.user.favoriteMovies.filter( title => title !== movieTitle);
+    res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);;
+  } else {
+    res.status(400).send('no such user')
+  }
 })
 
 //READ
@@ -213,8 +253,8 @@ app.get('/movies', (req, res) => {
 
 // READ
 app.get('/movies/:title', (req, res) => {
-    const { title } =req.params;
-    const movie = topMovies.find( movie => movie.Title === title );
+    const { title } = req.params;
+    const movie = movie.find( movie => movie.Title === title );
    
     if (movie) {
       res.status(200).json(movie);
@@ -264,6 +304,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server on port 8080
-app.listen(8080, () => console.log('listening on 8080.'))
+app.listen(8080, () => console.log("listening on 8080"))
 
 
