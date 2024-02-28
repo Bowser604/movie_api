@@ -276,7 +276,8 @@ app.get("/movies/:title", (req, res) => {
 // READ
 app.get("/movies/genre/:genreName", (req, res) => {
   const { genreName } = req.params;
-  const genre = topMovies.find((movie) => movie.Genre.Name === genreName).Genre;
+  console.log("Received request for genre:", genreName);
+  const genre = topMovies.find( movie => movie.Genre.Name === genreName).Genre;
 
   if (genre) {
     res.status(200).json(genre);
@@ -288,8 +289,7 @@ app.get("/movies/genre/:genreName", (req, res) => {
 // READ
 app.get("/movies/director/:directorName", (req, res) => {
   const { directorName } = req.params;
-  const director = topMovies.find(
-    (movie) => movie.Director.Name === directorName
+  const director = topMovies.find( movie => movie.Director.Name === directorName
   ).Director;
 
   if (director) {
@@ -314,3 +314,4 @@ app.use((err, req, res, next) => {
 
 // Start the server on port 8080
 app.listen(8080, () => console.log("listening on 8080"));
+
