@@ -6,7 +6,6 @@ const fs = require("fs");
 const path = require("path");
 const uuid = require('uuid');
 
-
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
@@ -243,7 +242,7 @@ app.delete("/users/:id/:movieTitle", (req, res) => {
 app.delete("/users/:id", (req, res) => {
   const { id } = req.params;
 
-  let user = users.find( user => user.id == id);
+  let user = users.find( user => user.id == id );
 
   if (user) {
     users = users.filter((user) => user.id != id);
@@ -278,7 +277,6 @@ app.get("/movies/:title", (req, res) => {
 // READ
 app.get("/movies/genre/:genreName", (req, res) => {
   const { genreName } = req.params;
-  console.log("Received request for genre:", genreName);
   const genre = topMovies.find( movie => movie.Genre.Name === genreName).Genre;
 
   if (genre) {
