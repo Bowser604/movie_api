@@ -1,12 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Documentation</title>
+    <title>Documentation</title>
 </head>
+
 <body>
-    <h1>Documentation</h1>
-    <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at egestas ex. Nullam pharetra odio sit amet lacus tincidunt aliquam. Ut condimentum purus urna, a pharetra leo luctus id. Vivamus lobortis lectus eros, non cursus enim dapibus ut. Nullam pretium suscipit tellus vitae vulputate. Phasellus tristique tellus nec nisi vulputate interdum.</div>
+    <h1>Movie API</h1>
+    <p>Information about movies, directors and genres provided.<br>
+        sign up, update, remove and create a list of their favorite movie information.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Endpoint URL</th>
+                <th>HTTP Method</th>
+                <th>Query Parameters</th>
+                <th>Request data</th>
+                <th>Response data</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Return a list of all movies to user</td>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>Array of JSON objects holding data about all movies</td>
+            </tr>
+            <tr>
+                <td>Return data about a single movie by title to the user</td>
+                <td>/movies/[title]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object holding data about a single movie containing title, description, genre, year and
+                    director. Example:
+                    <code>
+                        {
+                            Title: "Gladiator",
+                            Description:
+                              "A former Roman General sets out to exact vengeance against the corrupt emperor.",
+                            Genre: {
+                              Name: "Action/Drama",
+                              year: "2000",
+                            },
+                            Director: {
+                              Name: "Ridley Scott",
+                              Bio: 'Described by film producer Michael Deeley as "the very best eye in the business".',
+                              Birth: "November 30, 1937",
+                            }
+                          }
+                        </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Return data about a movie genre</td>
+                <td>/movies/genre/[genreName]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>Array of JSON objects holding data about all movies by genre requested</td>
+            </tr>
+            <tr>
+                <td>Return data about a director by name</td>
+                <td>/movies/director/[directorName]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>Array of JSON objects holding data about all movies by director requested</td>
+            </tr>
+            <tr>
+                <td>Register new user</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>A JSON object holding data about user to add. Example:
+                    <code>
+                        {
+                            'Name': 'John Doe',<br />
+                            'Username': '[username]',<br />
+                            'Email': [email@example.com],<br />
+                            'Birth-date': '1987-08-01'
+                        }
+                        </code>
+                </td>
+                <td>A JSON objects holding data about the user that was added, with assigned i.d.:
+                    <code>
+                        {
+                            '_id': '*****',<br />
+                            'Name': 'John Doe',<br />
+                            'Username': '[username]',<br />
+                            'Email': [email@example.com],<br />
+                            'Birth-date': '1987-08-01'
+                        }
+                        </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Update user info</td>
+                <td>/users/[id]</td>
+                <td>PUT</td>
+                <td>A JSON object holding data about the user that needs to be updated. Example:
+                    <code>
+                            {
+                                "name": "Mary",
+                                "favoriteMovies": [] 
+                            }
+                        </code>
+                </td>
+                <td>A JSON object holding data about the updated user information. Example:
+                    <code>
+                            {
+                                "id": 2,
+                                "name": "Mary",
+                                "favoriteMovies": [] 
+                            }
+                        </code>
+                </td>
+            </tr>
+            <tr>
+                <td>Allow users to add a movie to their list of favorites</td>
+                <td>/users/[username]/[movieID]</td>
+                <td>PUT</td>
+                <td>None</td>
+                <td>A message showing text that a movie has been added.</td>
+            </tr>
+            <tr>
+                <td>Allow users to delete a movie from their list of favorites</td>
+                <td>/users/[username]/[movieID]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>A message showing text that a movie has been removed.</td>
+            </tr>
+            <tr>
+                <td>Deregister existing user info</td>
+                <td>/users/[username]/[movieid]</td>
+                <td>DELETE</td>
+                <td>None</td>
+                <td>A message showing text that a movie has been removed.</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
+
 </html>

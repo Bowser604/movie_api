@@ -204,7 +204,7 @@ app.put("/users/:id", (req, res) => {
 
   if (user) {
     user.name = updatedUser.name;
-    res.status(200).json(user);;
+    res.status(200).json(user);
   } else {
     res.status(400).send("no such user");
   }
@@ -218,7 +218,7 @@ app.post("/users/:id/:movieTitle", (req, res) => {
 
   if (user) {
     user.favoriteMovies.push(movieTitle);
-    res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);;
+    res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);
   } else {
     res.status(400).send("no such user")
   }
@@ -232,7 +232,7 @@ app.delete("/users/:id/:movieTitle", (req, res) => {
 
   if (user) {
     user.favoriteMovies = user.favoriteMovies.filter( title => title !== movieTitle);
-    res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);;
+    res.status(200).send(`${movieTitle} has been removed from user ${id}'s array`);
   } else {
     res.status(400).send("no such user")
   }
@@ -314,4 +314,6 @@ app.use((err, req, res, next) => {
 
 // Start the server on port 8080
 app.listen(8080, () => console.log("listening on 8080"));
+
+
 
