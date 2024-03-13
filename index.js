@@ -112,7 +112,7 @@ let topMovies = [
     },
     Director: {
       Name: "Takashi Miike",
-      Bio: "akashi Miike is a Japanese film director, film producer and screenwriter. He has directed over one hundred theatrical, video, and television productions since his debut in 1991. His films run through a variety of different genres, and range from violent and bizarre to dramatic and family-friendly movies.",
+      Bio: "Takashi Miike is a Japanese film director, film producer and screenwriter. He has directed over one hundred theatrical, video, and television productions since his debut in 1991. His films run through a variety of different genres, and range from violent and bizarre to dramatic and family-friendly movies.",
       Birth: "August 24, 1960",
     },
   },
