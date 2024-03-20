@@ -1,3 +1,9 @@
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -9,6 +15,9 @@ const uuid = require('uuid');
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
+
+mongoose.connect('mongodb://localhost:27017/[Movies]', { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

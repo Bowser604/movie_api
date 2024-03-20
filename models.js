@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+
+
 let movieSchema = mongoose.Schema({
   Title: {type: String, required: true},
   Decription: {type: String, required: true},
@@ -24,8 +26,8 @@ let userSchema = mongoose.Schema({
     FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
 });
 
-let Movie = mongoose.model('Movie', movieSchema);
-let User = mongoose.model('User', userSchema);
+let Movie = mongoose.model('Movie', movieSchema); // Create collection db.movie in MongoDB database
+let User = mongoose.model('User', userSchema);  // Create collection db.users in MongoDB database
 
-module.exports.Movie = Movie;
+module.exports.Movie = Movie; 
 module.exports.User = User;
