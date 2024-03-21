@@ -47,7 +47,7 @@ let topMovies = [
       "Illegal boxing promoter Turkish (Jason Statham) convinces gangster Brick Top (Alan Ford) to offer bets on bare-knuckle boxer Mickey (Brad Pitt) at his bookie business. When Mickey does not throw his first fight as agreed, an infuriated Brick Top demands another match.",
     Genre: {
       Name: "Crime/Comedy",
-      year: "2000",
+      Year: "2000",
     },
     Director: {
       Name: "Guy Ritchie",
@@ -61,7 +61,7 @@ let topMovies = [
       "After rising through the ranks of her male-dominated profession, idealistic FBI agent Kate Macer (Emily Blunt) receives a top assignment. Recruited by mysterious government official Matt Graver (Josh Brolin), Kate joins a task force for the escalating war against drugs.",
     Genre: {
       Name: "Action/Crime",
-      year: "2015",
+      Year: "2015",
     },
     Director: {
       Name: "Denis Villeneuve",
@@ -75,7 +75,7 @@ let topMovies = [
       "Eddy (Nick Moran) convinces three friends to pool funds for a high-stakes poker game against local crime boss Hatchet Harry (P.H. Moriarty). Harry cheats and Eddy loses, giving him a week to pay back 500,000 pounds or hand over his fathers pub.",
     Genre: {
       Name: "Comedy/Crime",
-      year: "1998",
+      Year: "1998",
     },
     Director: {
       Name: "Guy Ritchie",
@@ -89,7 +89,7 @@ let topMovies = [
       "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
     Genre: {
       Name: "Action/Drama",
-      year: "2000",
+      Year: "2000",
     },
     Director: {
       Name: "Ridley Scott",
@@ -103,7 +103,7 @@ let topMovies = [
       "Kenshin reunites with a former master to ready for battle against Makoto Shishio who has formed an army fleet to overthrow the Meiji government and destroy his enemies.",
     Genre: {
       Name: "Action/Adventure",
-      year: "2014",
+      Year: "2014",
     },
     Director: {
       Name: "Keishi Ohtomo",
@@ -117,7 +117,7 @@ let topMovies = [
       "Cursed with immortality, a highly skilled samurai in feudal Japan promises to help a young woman avenge the death of her parents. Their mission leads them into a bloody battle with a ruthless warrior and his band of master swordsmen.",
     Genre: {
       Name: "Action/Crime",
-      year: "2017",
+      Year: "2017",
     },
     Director: {
       Name: "Takashi Miike",
@@ -131,7 +131,7 @@ let topMovies = [
       'Vincent Vega (John Travolta) and Jules Winnfield (Samuel L. Jackson) are hitmen with a penchant for philosophical discussions. In this ultra-hip, multi-strand crime movie, their storyline is interwoven with those of their boss, gangster Marsellus Wallace (Ving Rhames) ; his actress wife, Mia (Uma Thurman) ; struggling boxer Butch Coolidge (Bruce Willis) ; master fixer Winston Wolfe (Harvey Keitel) and a nervous pair of armed robbers, "Pumpkin" (Tim Roth) and "Honey Bunny" (Amanda Plummer).',
     Genre: {
       Name: "Crime/Thriller",
-      year: "1994",
+      Year: "1994",
     },
     Director: {
       Name: "Quentin Tarantino",
@@ -145,7 +145,7 @@ let topMovies = [
       "Captain John Miller (Tom Hanks) takes his men behind enemy lines to find Private James Ryan, whose three brothers have been killed in combat. Surrounded by the brutal realties of war, while searching for Ryan, each man embarks upon a personal journey and discovers their own strength to triumph over an uncertain future with honor, decency and courage.",
     Genre: {
       Name: "War/Action",
-      year: "1998",
+      Year: "1998",
     },
     Director: {
       Name: "Steven Allan Spielberg",
@@ -159,7 +159,7 @@ let topMovies = [
       "Epic tale in which an intrepid archaeologist tries to beat a band of Nazis to a unique religious relic which is central to their plans for world domination. Battling against a snake phobia and a vengeful ex-girlfriend, Indiana Jones is in constant peril, making hairs-breadth escapes at every turn in this celebration of the innocent adventure movies of an earlier era.",
     Genre: {
       Name: "Adventure/Action",
-      year: "1981",
+      Year: "1981",
     },
     Director: {
       Name: "Steven Allan Spielberg",
@@ -173,7 +173,7 @@ let topMovies = [
       "New York City policeman John McClane (Bruce Willis) is visiting his estranged wife (Bonnie Bedelia) and two daughters on Christmas Eve. He joins her at a holiday party in the headquarters of the Japanese-owned business she works for. But the festivities are interrupted by a group of terrorists who take over the exclusive high-rise, and everyone in it. Very soon McClane realizes that there is no one to save the hostages - but him.",
     Genre: {
       Name: "Action/Thriller",
-      year: "1988",
+      Year: "1988",
     },
     Director: {
       Name: "John McTiernan",
