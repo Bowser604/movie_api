@@ -26,14 +26,14 @@
       <tbody>
         <tr>
           <td>Return a list of all movies to user</td>
-          <td>db.movies.find()</td>
+          <td>/movies</td>
           <td>GET</td>
           <td>None</td>
           <td>Array of JSON objects holding data about all movies</td>
         </tr>
         <tr>
           <td>Return data about a single movie by title to the user</td>
-          <td>db.movies.find({ Title: "Sicario" })</td>
+          <td>/movies/[title]</td>
           <td>GET</td>
           <td>None</td>
           <td>
@@ -57,7 +57,7 @@
         </tr>
         <tr>
           <td>Return data about a movie genre</td>
-          <td>db.movies.find( {"Genre.Name": "Action"} )</td>
+          <td>/movie/genre/[genreName]</td>
           <td>GET</td>
           <td>None</td>
           <td>
@@ -67,7 +67,7 @@
         </tr>
         <tr>
           <td>Return data about a director by name</td>
-          <td>db.movies.find( {"Director.Name": "Guy Ritchie"} )</td>
+          <td>/movies/director/[directorName]</td>
           <td>GET</td>
           <td>None</td>
           <td>
@@ -77,22 +77,10 @@
         </tr>
         <tr>
           <td>Return data about all users</td>
-          <td>db.users.find()</td>
+          <td>/movies/users</td>
           <td>GET</td>
           <td>None</td>
           <td>Array of JSON objects holding data about all users</td>
-        </tr>
-        <tr>
-          <td>Return data about genre and director name</td>
-          <td>
-            db.movies.find( {$and: [ {"Genre.Name": "Crime"}, {"Director.Name":
-            "Guy Ritchie"} ] })
-          </td>
-          <td>GET</td>
-          <td>None</td>
-          <td>
-            Array of JSON objects holding data about genre and director name
-          </td>
         </tr>
         <tr>
           <td>Register new user</td>
@@ -121,10 +109,7 @@
         </tr>
         <tr>
           <td>Update user info</td>
-          <td>
-            db.users.update( { user firstname: 'Bob' }, { $push: {
-            email:'bobby.wilson@example.com' }} )
-          </td>
+          <td>/user/[id]</td>
           <td>PUT</td>
           <td>
             A JSON object holding data about the user that needs to be updated.
@@ -137,11 +122,8 @@
         </tr>
         <tr>
           <td>Allow users to add a movie to their list of favorites</td>
-          <td>
-            db.users.update( { user firstname: 'Bob' }, { $push: {
-            FavoriteMovies: ObjectId('65efd20130d323408b98955') }} )
-          </td>
-          <td>PUT</td>
+          <td>/users/[username]/[movieId]</td>
+          <td>POST</td>
           <td>
             A JSON object holding data about the user that needs to be updated.
             Example:
@@ -165,26 +147,6 @@
             </code>
           </td>
         </tr>
-
-        <tr>
-          <td>Update single movie description info</td>
-          <td>
-            db.movies.updateOne ( { __id: ObjectId('65efd20130d323408b98955') },
-            { $set: { Description:"New York City policeman John McClane (Bruce
-            Willis) is visiting his estranged wife (Bonnie Bedelia) and two
-            daughters on Christmas Eve. He joins her at a holliday party in the
-            headquarters of the Japanese-owned business she works for. But the
-            festivities are interrupted by a group of terrorists who take over
-            the exclusive high-rise, and everyone in it. Very soon McClane
-            realizes that there is no one to save the hostages - but him."}})
-          </td>
-          <td>POST</td>
-          <td>None</td>
-          <td>
-            { acknowleaged: true, insertedId: null, matchedCount: 1,
-            modifiedCount: 1, userredcount: 0 }
-          </td>
-        </tr>
         <tr>
           <td>Update all movies with same director bio info</td>
           <td>
@@ -203,17 +165,14 @@
         </tr>
         <tr>
           <td>Allow users to delete a movie from their list of favorites</td>
-          <td>
-            db.users.deleteOne( { FavoriteMovies: [
-            ObjectId('65efd20130d32340e8b98955')]} )
-          </td>
+          <td>/users/[username]/[movieId]</td>
           <td>DELETE</td>
           <td>None</td>
           <td>A message showing text that a movie has been removed.</td>
         </tr>
         <tr>
           <td>Deregister existing user info</td>
-          <td>db.users.deleteOne( {user_firstname: 'John'} )</td>
+          <td>/users/[username]/[moviesid]</td>
           <td>DELETE</td>
           <td>None</td>
           <td>acknowledged: true, deletedCount: 1</td>
