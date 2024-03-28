@@ -33,7 +33,7 @@
         </tr>
         <tr>
           <td>Return data about a single movie by title to the user</td>
-          <td>/movies/[title]</td>
+          <td>/movies/:Title</td>
           <td>GET</td>
           <td>None</td>
           <td>
@@ -57,7 +57,7 @@
         </tr>
         <tr>
           <td>Return data about a movie genre</td>
-          <td>/movie/genre/[genreName]</td>
+          <td>/movies/genre/:genreName</td>
           <td>GET</td>
           <td>None</td>
           <td>
@@ -67,7 +67,7 @@
         </tr>
         <tr>
           <td>Return data about a director by name</td>
-          <td>/movies/director/[directorName]</td>
+          <td>/movies/director/:directorName</td>
           <td>GET</td>
           <td>None</td>
           <td>
@@ -77,7 +77,7 @@
         </tr>
         <tr>
           <td>Return data about all users</td>
-          <td>/movies/users</td>
+          <td>/users</td>
           <td>GET</td>
           <td>None</td>
           <td>Array of JSON objects holding data about all users</td>
@@ -89,10 +89,14 @@
           <td>
             A JSON object holding data about user to add. Example:
             <code>
-              { 'Name': 'John Doe',<br />
-              'Username': '[username]',<br />
-              'Email': [email@example.com],<br />
-              'Birth-date': '1987-08-01' }
+              { 
+                "_id": "660482b5838cfbe87fad18b6",<br />
+                'Username': '[username]',<br />
+                "Password": '[password]',<br />
+                'Email': [email@example.com],<br />
+                'Birthday': '1987-08-01T08:00:00.000Z',<br />
+                "FavoriteMovies": [],<br />
+              }
             </code>
           </td>
           <td>
@@ -103,13 +107,13 @@
               'Name': 'John Doe',<br />
               'Username': '[username]',<br />
               'Email': [email@example.com],<br />
-              'Birth-date': '1987-08-01' }
+              'Birthday': '1987-08-01' }
             </code>
           </td>
         </tr>
         <tr>
           <td>Update user info</td>
-          <td>/user/[id]</td>
+          <td>/user/:Username</td>
           <td>PUT</td>
           <td>
             A JSON object holding data about the user that needs to be updated.
@@ -122,7 +126,7 @@
         </tr>
         <tr>
           <td>Allow users to add a movie to their list of favorites</td>
-          <td>/users/[username]/[movieId]</td>
+          <td>/users/:Username/movies/:MovieId</td>
           <td>POST</td>
           <td>
             A JSON object holding data about the user that needs to be updated.
@@ -165,17 +169,17 @@
         </tr>
         <tr>
           <td>Allow users to delete a movie from their list of favorites</td>
-          <td>/users/[username]/[movieId]</td>
+          <td>/users/:Username/movies/:MovieId</td>
           <td>DELETE</td>
           <td>None</td>
           <td>A message showing text that a movie has been removed.</td>
         </tr>
         <tr>
           <td>Deregister existing user info</td>
-          <td>/users/[username]/[moviesid]</td>
+          <td>/users/:username</td>
           <td>DELETE</td>
           <td>None</td>
-          <td>acknowledged: true, deletedCount: 1</td>
+          <td>A message showing text that a user has been removed.</td>
         </tr>
       </tbody>
     </table>
