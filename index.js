@@ -96,7 +96,7 @@ app.post("/users/:Username/movies/:MovieID", async (req, res) => {
   await Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
-      $push: { FavriteMovies: req.params.MovieID },
+      $push: { FavoriteMovies: req.params.MovieID },
     },
     { new: true }
   ) // Updated document is returned
@@ -105,32 +105,14 @@ app.post("/users/:Username/movies/:MovieID", async (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Errror: " + err);
+      res.status(500).send("Error: " + err);
     });
 });
 
 // Delete movie title from user
 app.delete("/users/:id/:movieTitle", async (req, res) => {
-  const { id, movieTitle } = req.params;
-
-  const user = await Users.findById(id);
-  // let user = users.find( user => user.id == id);
-
-  if (user) {
-    user.favoriteMovies = user.favoriteMovies.filter(
-      (title) => title !== movieTitle
-    );
-    res
-      .status(200)
-      .send(`${movieTitle} has been removed from user ${id}'s array`);
-  } else {
-    res.status(400).send("no such user");
-  }
-});
-
-// Delete a user by username
-app.delete("/users/:Username", (req, res) => {
-  Users.findOneAndRemove({ Username: req.params.Username })
+  await Users.findOneAndRemove(
+    { Username: req.params.Username })
     .then((user) => {
       if (!user) {
         res.status(400).send(req.params.Username + " was not found");
@@ -143,6 +125,24 @@ app.delete("/users/:Username", (req, res) => {
       res.status(500).send("Error: " + err);
     });
 });
+
+// Delete a user by username
+app.delete("/users/:Username", async (req, res) => {
+  await Users.findOneAndRemove(
+    { Username: req.params.Username })
+    .then((user) => {
+      if (!user) {
+        res.status(400).send(req.params.Username + " was not found");
+      } else {
+        res.status(200).send(req.params.Username + " was deleted.");
+      }
+    })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
+});
+
 
 //READ message
 app.get("/", (req, res) => {
