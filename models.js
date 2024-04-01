@@ -23,11 +23,11 @@ let userSchema = mongoose.Schema({
     Password: {type: String, required: true},
     Email: {type: String, required: true},
     Birthday: Date,
-    FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movies' }]
+    FavoriteMovies: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
 });
 
-let Movie = mongoose.model('Movies', movieSchema); // Create collection db.movie in MongoDB database
-let User = mongoose.model('Users', userSchema);  // Create collection db.users in MongoDB database
+let Movie = mongoose.model('Movie', movieSchema); // Create collection db.movie in MongoDB database
+let User = mongoose.model('User', userSchema);  // Create collection db.users in MongoDB database
 
 module.exports.Movie = Movie; 
 module.exports.User = User;

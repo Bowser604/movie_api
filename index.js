@@ -91,7 +91,8 @@ app.put("/users/:Username", async (req, res) => {
     });
 });
 
-// CREATE add favorite movie to user
+
+// CREATE favorite movie to user
 app.post("/users/:Username/movies/:MovieID", async (req, res) => {
   await Users.findOneAndUpdate(
     { Username: req.params.Username },
@@ -137,10 +138,10 @@ app.delete("/users/:Username", async (req, res) => {
         res.status(200).send(req.params.Username + " was deleted.");
       }
     })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send("Error: " + err);
-  });
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
 
