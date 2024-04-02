@@ -111,11 +111,15 @@ app.post("/users/:Username/movies/:MovieID", async (req, res) => {
 });
 
 // Delete movie title from user
-app.delete("/users/:Username/:movieTitle", async (req, res) => {
-  await Users.findOneAndRemove(
-    { Username: req.params.Username })
-    .then((user) => {
-      if (!user) {
+app.delete("/users/:Username/:MovieID", async (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.username }),
+    { $pull: { FavoriteMovies: req.params.MovieID } },
+    { new: true }
+    // }}
+    // .then((user) => {
+      // if (!user) {
+        if (Users) {
         res.status(400).send(req.params.Username + " was not found");
       } else {
         res.status(200).send(req.params.Username + " was deleted.");
@@ -125,7 +129,7 @@ app.delete("/users/:Username/:movieTitle", async (req, res) => {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
-});
+// });
 
 // Delete a user by username
 app.delete("/users/:Username", async (req, res) => {
