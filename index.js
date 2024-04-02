@@ -111,7 +111,7 @@ app.post("/users/:Username/movies/:MovieID", async (req, res) => {
 });
 
 // Delete movie title from user
-app.delete("/users/:id/:movieTitle", async (req, res) => {
+app.delete("/users/:Username/:movieTitle", async (req, res) => {
   await Users.findOneAndRemove(
     { Username: req.params.Username })
     .then((user) => {
