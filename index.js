@@ -110,30 +110,45 @@ app.post("/users/:Username/movies/:MovieID", async (req, res) => {
     });
 });
 
+
+// // Delete movie title from user
+// app.delete("/users/:Username/:MovieID", async (req, res) => {
+//   await Users.findOneAndUpdate(
+//     { UserName: req.params.Username },
+//     { $pull: { FavoriteMovies: req.params.MovieID } },
+//     { new: true },
+//     (err, updatedUser) => {
+//       if (err) {
+//         console.error(err);
+//         res.status(500).send("Error: " + err);
+//       } else {
+//         req.json(updatedUser);
+//       }
+//     });
+// });
+
+
 // Delete movie title from user
 app.delete("/users/:Username/:MovieID", async (req, res) => {
-  Users.findOneAndUpdate(
-    { Username: req.params.username }),
-    { $pull: { FavoriteMovies: req.params.MovieID } },
+  await Users.findOneAndUpdate(
+    { UserName: req.params.Username },
+    { $pull: { FavoriteMovies: req.params.MovieID },
+    },
     { new: true }
-    // }}
-    // .then((user) => {
-      // if (!user) {
-        if (Users) {
-        res.status(400).send(req.params.Username + " was not found");
-      } else {
-        res.status(200).send(req.params.Username + " was deleted.");
-      }
-    })
+  )
+  .then((updatedUser) => {
+    res.json(updatedUser);
+    })  
     .catch((err) => {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
-// });
+});
+
 
 // Delete a user by username
 app.delete("/users/:Username", async (req, res) => {
-  await Users.findOneAndRemove(
+  await Users.findOneAndUpdate(
     { Username: req.params.Username })
     .then((user) => {
       if (!user) {
