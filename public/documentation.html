@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css">
     <title>Documentation</title>
   </head>
 
@@ -152,22 +153,6 @@
           </td>
         </tr>
         <tr>
-          <td>Update all movies with same director bio info</td>
-          <td>
-            db.movies.updateMany ( { "Director.Name": "Steven Allan Spielberg"
-            }, { $set: { "Director.Bio": "American film director,producer and
-            screenwriter. A major figure of the New Hollywood era and pioneer of
-            the modern blockbuster, he is the most commercially successful
-            director in history." }})
-          </td>
-          <td>POST</td>
-          <td>None</td>
-          <td>
-            { acknowleaged: true, insertedId: null, matchedCount: 2,
-            modifiedCount: 2, userredcount: 0 }
-          </td>
-        </tr>
-        <tr>
           <td>Allow users to delete a movie from their list of favorites</td>
           <td>/users/:Username/movies/:MovieId</td>
           <td>DELETE</td>
@@ -176,7 +161,7 @@
         </tr>
         <tr>
           <td>Deregister existing user info</td>
-          <td>/users/:username</td>
+          <td>user/users/:Username</td>
           <td>DELETE</td>
           <td>None</td>
           <td>A message showing text that a user has been removed.</td>

@@ -7,12 +7,10 @@ const app = express();
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
-const uuid = require("uuid");
 
 const Movies = Models.Movie;
 const Users = Models.User;
-const Genres = Models.Genre;
-const Directors = Models.Director;
+
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
@@ -131,7 +129,7 @@ app.delete("/users/:Username/movies/:MovieID", async (req, res) => {
 
 // Delete a user by username
 app.delete("/users/:Username", async (req, res) => {
-  await Users.findOneAndUpdate(
+  await Users.findOneAndRemove(
     { Username: req.params.Username })
     .then((user) => {
       if (!user) {
