@@ -1,9 +1,12 @@
 h1{
     text-align: center;
+    margin-left: auto;
 }
 p{
-    text-align: center;
+    text-align: right;
+    padding: 40px;
 }
 td{
     text-align: center;
+    padding: 40;
 }
