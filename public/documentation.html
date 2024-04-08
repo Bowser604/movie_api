@@ -119,8 +119,8 @@
             A JSON object holding data about the user that needs to be updated.
             Example:
             <code>
-              { acknowleaged: true, insertedId: null, matchedCount: 1,
-              modifiedCount: 1, userredcount: 0 }
+              { "acknowleaged": true, "insertedId": null, "matchedCount": 1,
+              "modifiedCount": 1, "userredcount": 0 }
             </code>
           </td>
         </tr>
@@ -132,10 +132,9 @@
             A JSON object holding data about the user that needs to be updated.
             Example:
             <code>
-              { _id: ObjectId('65efbacb30d32340e8b98953'), user_firstname:
-              'Bob'. user_lastname: 'Wilson', email: 'bob.wilson@example.com',
-              password: 'bobpass', birthday: ISODate
-              ('1988-11-30T00:00:00.000z'), user_movies: [], FavoriteMovies: []
+              { "_id": "65efbacb30d32340e8b98953", "user_firstname":
+              "Bob", "user_lastname": "Wilson", "email": "bob.wilson@example.com",
+              "password": "bobpass", "birthday": "1988-11-30T00:00:00.000Z", "user_movies": [], "FavoriteMovies": []
               }
             </code>
           </td>
@@ -143,11 +142,9 @@
             A JSON object holding data about the updated user information.
             Example:
             <code>
-              { "_id: ObjectId('65efbacb30d32340e8b98953'), user firstname:
-              'Bob'. user_lastname: 'Wilson', email: 'bob.wilson@example.com',
-              password: 'bobpass', birthday: ISODate
-              ('1988-11-30T00:00:00.000z'), user_movies: [], FavoriteMovies: [
-              ObjectId('65efd20130d32340e8b98955')] }
+              { "_id: "65efbacb30d32340e8b98953", "user firstname":
+              "Bob", "user_lastname": "Wilson", "email": "bob.wilson@example.com",
+              "password": "bobpass", "birthday: "1988-11-30T00:00:00.000z", "user_movies": [], "FavoriteMovies": ["65efd20130d32340e8b98955"] }
             </code>
           </td>
         </tr>
@@ -159,7 +156,7 @@
           <td>A message showing text that a movie has been removed.</td>
         </tr>
         <tr>
-          <td>Delete user name</td>
+          <td>Delete user</td>
           <td>/users/:Username</td>
           <td>DELETE</td>
           <td>None</td>
