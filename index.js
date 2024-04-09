@@ -24,6 +24,12 @@ mongoose.connect("mongodb://localhost:27017/[Movies]", {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+require('./passport');
+
 app.use(morgan("combined", { stream: accessLogStream }));
 
 // CREATE a user
@@ -55,7 +61,7 @@ app.post("/users", async (req, res) => {
 });
 
 // GET all users
-app.get("/users", async (req, res) => {
+app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -129,9 +135,11 @@ app.delete("/users/:Username/movies/:MovieID", async (req, res) => {
 
 // Delete a user by username
 app.delete("/users/:Username", async (req, res) => {
+  console.log("Inside DELETE /users/:Username endpoint");
   await Users.findOneAndRemove(
     { Username: req.params.Username })
     .then((user) => {
+      console.log("User delete:", user);
       if (!user) {
         res.status(400).send(req.params.Username + " was not found");
       } else {
@@ -151,7 +159,7 @@ app.get("/", (req, res) => {
 });
 
 // READ all movies
-app.get("/movies", async (req, res) => {
+app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
