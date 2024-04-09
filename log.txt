@@ -434,3 +434,8 @@
 ::1 - Brian [09/Apr/2024:06:01:48 +0000] "GET /users HTTP/1.1" 401 - "-" "PostmanRuntime/7.37.3"
 ::1 - Brian [09/Apr/2024:06:07:48 +0000] "POST /users?{=&%22username%22=%20%22Brian%22&%22Password%22=%20Brian99%22&}= HTTP/1.1" 400 23 "-" "PostmanRuntime/7.37.3"
 ::1 - Brian [09/Apr/2024:06:10:03 +0000] "POST /users?{=&%22_id%22=%20%226614badb9724d31b9e125990%22&%22Username%22=%20%22Brian%22&%22Password%22=%20%22Brian99%22&%22Email%22=%20%22Brian99@gmail.com%22&}= HTTP/1.1" 400 23 "-" "PostmanRuntime/7.37.3"
+::1 - Brian [09/Apr/2024:16:55:04 +0000] "POST /users?{=&%22_id%22=%20%226614badb9724d31b9e125990%22&%22Username%22=%20%22Brian%22&%22Password%22=%20%22Brian99%22&%22Email%22=%20%22Brian99@gmail.com%22&}= HTTP/1.1" 400 23 "-" "PostmanRuntime/7.37.3"
+::1 - - [09/Apr/2024:16:57:44 +0000] "POST /users/Jonny HTTP/1.1" 404 151 "-" "PostmanRuntime/7.37.3"
+::1 - Brian [09/Apr/2024:16:59:06 +0000] "POST /users HTTP/1.1" 400 23 "-" "PostmanRuntime/7.37.3"
+::1 - Brian [09/Apr/2024:16:59:22 +0000] "POST /users?{=&%22_id%22=%20%226614badb9724d31b9e125990%22&%22Username%22=%20%22Brian%22&%22Password%22=%20%22Brian99%22&%22Email%22=%20%22Brian99@gmail.com%22&}= HTTP/1.1" 400 23 "-" "PostmanRuntime/7.37.3"
+::1 - Brian [09/Apr/2024:17:03:13 +0000] "POST /users?Username=Brian&Password=Brian99 HTTP/1.1" 400 23 "-" "PostmanRuntime/7.37.3"
