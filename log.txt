@@ -439,3 +439,8 @@
 ::1 - Brian [09/Apr/2024:16:59:06 +0000] "POST /users HTTP/1.1" 400 23 "-" "PostmanRuntime/7.37.3"
 ::1 - Brian [09/Apr/2024:16:59:22 +0000] "POST /users?{=&%22_id%22=%20%226614badb9724d31b9e125990%22&%22Username%22=%20%22Brian%22&%22Password%22=%20%22Brian99%22&%22Email%22=%20%22Brian99@gmail.com%22&}= HTTP/1.1" 400 23 "-" "PostmanRuntime/7.37.3"
 ::1 - Brian [09/Apr/2024:17:03:13 +0000] "POST /users?Username=Brian&Password=Brian99 HTTP/1.1" 400 23 "-" "PostmanRuntime/7.37.3"
+::1 - - [10/Apr/2024:02:04:44 +0000] "GET /movies HTTP/1.1" 401 - "-" "PostmanRuntime/7.37.3"
+::1 - - [10/Apr/2024:02:24:24 +0000] "GET /movies HTTP/1.1" 401 - "-" "PostmanRuntime/7.37.3"
+::1 - - [10/Apr/2024:02:25:05 +0000] "GET /movies HTTP/1.1" 401 - "-" "PostmanRuntime/7.37.3"
+::1 - - [10/Apr/2024:02:25:32 +0000] "GET /movies HTTP/1.1" 401 - "-" "PostmanRuntime/7.37.3"
+::1 - - [10/Apr/2024:02:25:53 +0000] "GET /users HTTP/1.1" 401 - "-" "PostmanRuntime/7.37.3"

@@ -7,10 +7,8 @@ const app = express();
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
-
 const Movies = Models.Movie;
 const Users = Models.User;
-
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
@@ -24,11 +22,9 @@ mongoose.connect("mongodb://localhost:27017/[Movies]", {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-let auth = require('./auth')(app);
-
-const passport = require('passport');
-require('./passport');
+// let auth = require('./auth')(app);
+// const passport = require('passport');
+// require('./passport');
 
 app.use(morgan("combined", { stream: accessLogStream }));
 
@@ -60,8 +56,9 @@ app.post("/users", async (req, res) => {
     });
 });
 
+// passport.authenticate('jwt', { session: false }),
 // GET all users
-app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get("/users", async (req, res) => {
   await Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -159,7 +156,7 @@ app.get("/", (req, res) => {
 });
 
 // READ all movies
-app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.get("/movies", async (req, res) => {
   await Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
