@@ -97,7 +97,7 @@ app.put("/users/:Username", async (req, res) => {
 
 
 // CREATE favorite movie to user
-app.post("/users/:Username/movies/:MovieID", async (req, res) => {
+app.post("/users/:Username/movies/:MovieID", passport.authenticate('jwt', {session: false }), async (req, res) => {
   await Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
@@ -116,7 +116,7 @@ app.post("/users/:Username/movies/:MovieID", async (req, res) => {
 
 
 // Delete movie title from user
-app.delete("/users/:Username/movies/:MovieID", async (req, res) => {
+app.delete("/users/:Username/movies/:MovieID", passport.authenticate('jwt', {session: false }), async (req, res) => {
   await Users.findOneAndUpdate(
     { Username: req.params.Username },
     { $pull: { FavoriteMovies: req.params.MovieID },
@@ -134,7 +134,7 @@ app.delete("/users/:Username/movies/:MovieID", async (req, res) => {
 
 
 // Delete a user by username
-app.delete("/users/:Username", async (req, res) => {
+app.delete("/users/:Username", passport.authenticate('jwt', {session: false }), async (req, res) => {
   console.log("Inside DELETE /users/:Username endpoint");
   await Users.findOneAndRemove(
     { Username: req.params.Username })
@@ -172,7 +172,7 @@ app.get("/movies", passport.authenticate('jwt', { session: false }), async (req,
 
 
 // READ movie info for specific title
-app.get("/movies/:Title", async (req, res) => {
+app.get("/movies/:Title", passport.authenticate('jwt', {session: false }), async (req, res) => {
   await Movies.findOne({ Title: req.params.Title })
     .then((movies) => {
       res.json(movies);
@@ -186,7 +186,7 @@ app.get("/movies/:Title", async (req, res) => {
 
 
 // READ by genre name
-app.get("/movies/genre/:genreName", async (req, res) => {
+app.get("/movies/genre/:genreName", passport.authenticate('jwt', {session: false }), async (req, res) => {
   await Movies.findOne({ "Genre.Name": req.params.genreName })
     .then((movies) => {
       res.json(movies);
@@ -199,7 +199,7 @@ app.get("/movies/genre/:genreName", async (req, res) => {
 
 
 // READ
-app.get("/movies/director/:directorName", async (req, res) => {
+app.get("/movies/director/:directorName", passport.authenticate('jwt', {session: false }), async (req, res) => {
   await Movies.findOne({ "Director.Name": req.params.directorName })
     .then((movies) => {
       res.json(movies);
