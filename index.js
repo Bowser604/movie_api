@@ -215,11 +215,6 @@ app.get("/secreturl", (req, res) => {
   res.send("This is a secret URL with super top-secret content.");
 });
 
-<<<<<<< Updated upstream
 
 app.listen(3000, () => console.log("listening on 3000"));
-=======
-app.listen(8080, () => console.log("listening on 8080"));
->>>>>>> Stashed changes
-
 
