@@ -133,7 +133,7 @@ app.delete("/users/:Username/movies/:MovieID", async (req, res) => {
 // Delete a user by username
 app.delete("/users/:Username", async (req, res) => {
   console.log("Inside DELETE /users/:Username endpoint");
-  await Users.findOneAndRemove(
+  await Users.findOneAndDelete(
     { Username: req.params.Username })
     .then((user) => {
       console.log("User delete:", user);

@@ -463,3 +463,4 @@
 ::1 - - [11/Apr/2024:03:43:14 +0000] "GET /users HTTP/1.1" 201 1549 "-" "PostmanRuntime/7.37.3"
 ::1 - - [11/Apr/2024:03:50:31 +0000] "GET /users HTTP/1.1" 201 1549 "-" "PostmanRuntime/7.37.3"
 ::1 - - [11/Apr/2024:03:50:46 +0000] "GET /movies HTTP/1.1" 201 7004 "-" "PostmanRuntime/7.37.3"
+::1 - - [12/Apr/2024:15:52:22 +0000] "DELETE /users/Brian HTTP/1.1" 200 18 "-" "PostmanRuntime/7.37.3"
