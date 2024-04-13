@@ -73,7 +73,12 @@ app.get("/users", passport.authenticate('jwt', { session: false }), async (req, 
 });
 
 // UPDATE user info
-app.put("/users/:Username", async (req, res) => {
+app.put("/users/:Username", passport.authenticate('jwt', { session: false }), async (req, res) => {
+  // Condition to check added here
+  // if(req.user.Username !== req.params.Username){
+  //   return res.status(400).send('Permission denied');
+  // }
+  // // Condition ends
   await Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
@@ -136,7 +141,7 @@ app.delete("/users/:Username/movies/:MovieID", passport.authenticate('jwt', {ses
 // Delete a user by username
 app.delete("/users/:Username", passport.authenticate('jwt', {session: false }), async (req, res) => {
   console.log("Inside DELETE /users/:Username endpoint");
-  await Users.findOneAndRemove(
+  await Users.findOneAndDelete(
     { Username: req.params.Username })
     .then((user) => {
       console.log("User delete:", user);
@@ -220,6 +225,6 @@ app.get("/secreturl", (req, res) => {
 });
 
 
-app.listen(8080, () => console.log("listening on 8080"));
+app.listen(8080, () => console.log("listening on 3000"));
 
 
