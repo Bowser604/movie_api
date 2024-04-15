@@ -494,3 +494,8 @@
 ::1 - - [13/Apr/2024:04:00:38 +0000] "PUT /users HTTP/1.1" 404 144 "-" "PostmanRuntime/7.37.3"
 ::1 - - [13/Apr/2024:04:00:47 +0000] "PUT /users/John HTTP/1.1" 200 163 "-" "PostmanRuntime/7.37.3"
 ::1 - - [13/Apr/2024:05:33:28 +0000] "PUT /users/John HTTP/1.1" 200 163 "-" "PostmanRuntime/7.37.3"
+::1 - - [15/Apr/2024:03:55:44 +0000] "PUT /users/John HTTP/1.1" 200 163 "-" "PostmanRuntime/7.37.3"
+::1 - - [15/Apr/2024:03:56:41 +0000] "GET /movies HTTP/1.1" 201 7004 "-" "PostmanRuntime/7.37.3"
+::1 - - [15/Apr/2024:03:57:18 +0000] "GET /users/John HTTP/1.1" 404 149 "-" "PostmanRuntime/7.37.3"
+::1 - - [15/Apr/2024:03:57:32 +0000] "GET /users HTTP/1.1" 201 1786 "-" "PostmanRuntime/7.37.3"
+::1 - - [15/Apr/2024:03:59:09 +0000] "PUT /users/John HTTP/1.1" 200 163 "-" "PostmanRuntime/7.37.3"
