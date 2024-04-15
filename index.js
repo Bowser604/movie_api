@@ -73,36 +73,31 @@ app.get("/users", passport.authenticate('jwt', { session: false }), async (req, 
 });
 
 // UPDATE user info
-app.put("/users/:Username", [
-  check("Username", "Username is required").notEmpty(),
-  check("Username", "Username contains non alphanumeric characters - not allowed.").isAlphanumeric()
-],
-  passport.authenticate('jwt', { session: false }), async (req, res) => {
-    // Condition to check added here
-    if(req.user.Username !== req.params.Username){
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  // CONDITION TO CHECK ADDED HERE
+  if(req.user.Username !== req.params.Username){
       return res.status(400).send('Permission denied');
-    }
-    // // Condition ends
-    await Users.findOneAndUpdate(
-      { Username: req.params.Username },
+  }
+  // CONDITION ENDS
+  await Users.findOneAndUpdate({ Username: req.params.Username }, {
+      $set:
       {
-        $set: {
           Username: req.body.Username,
           Password: req.body.Password,
           Email: req.body.Email,
-          Birthday: req.body.Birthday,
-        },
-      },
-      { new: true }
-    ) // Updated document is returned
+          Birthday: req.body.Birthday
+      }
+  },
+      { new: true }) // This line makes sure that the updated document is returned
       .then((updatedUser) => {
-        res.json(updatedUser);
+          res.json(updatedUser);
       })
       .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-      });
-  });
+          console.log(err);
+          res.status(500).send('Error: ' + err);
+      })
+});
+
 
 
 // CREATE favorite movie to user
