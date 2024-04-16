@@ -22,9 +22,9 @@ mongoose.connect("mongodb://localhost:27017/[Movies]", {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// let auth = require('./auth')(app);
-// const passport = require('passport');
-// require('./passport');
+let auth = require('./auth')(app);
+const passport = require('passport');
+require('./passport');
 
 app.use(morgan("combined", { stream: accessLogStream }));
 
@@ -56,9 +56,8 @@ app.post("/users", async (req, res) => {
     });
 });
 
-// passport.authenticate('jwt', { session: false }),
 // GET all users
-app.get("/users", async (req, res) => {
+app.get("/users", passport.authenticate('jwt', { session: false }), async (req, res) => {
   await Users.find()
     .then((users) => {
       res.status(201).json(users);
@@ -70,11 +69,7 @@ app.get("/users", async (req, res) => {
 });
 
 // UPDATE user info
-app.put("/users/:Username", [
-  check("Username", "Username is required").notEmpty(),
-  check("Username", "Username contains non alphanumeric characters - not allowed.").isAlphanumeric()
-],
-  passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.put("/users/:Username", passport.authenticate('jwt', { session: false }), async (req, res) => {
     // Condition to check added here
     if(req.user.Username !== req.params.Username){
       return res.status(400).send('Permission denied');
@@ -226,5 +221,5 @@ app.get("/secreturl", (req, res) => {
 });
 
 
-app.listen(3000, () => console.log("listening on 3000"));
+app.listen(8080, () => console.log("listening on 8080"));
 
