@@ -69,31 +69,31 @@ app.get("/users", passport.authenticate('jwt', { session: false }), async (req, 
 });
 
 // UPDATE user info
-app.put("/users/:Username", passport.authenticate('jwt', { session: false }), async (req, res) => {
+app.put("/users/:Username", passport.authenticate('jwt', { session: false }),
+ async (req, res) => {
     // Condition to check added here
     if(req.user.Username !== req.params.Username){
       return res.status(400).send('Permission denied');
     }
     // // Condition ends
     await Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      {
-        $set: {
+      { Username: req.params.Username }, {
+        $set: 
+        {
           Username: req.body.Username,
           Password: req.body.Password,
           Email: req.body.Email,
-          Birthday: req.body.Birthday,
-        },
+          Birthday: req.body.Birthday
+        }
       },
       { new: true }
-    ) // Updated document is returned
-      .then((updatedUser) => {
+    .then((updatedUser) => {
         res.json(updatedUser);
-      })
-      .catch((err) => {
+    })
+    .catch ((err) => {
         console.error(err);
         res.status(500).send("Error: " + err);
-      });
+      }))
   });
 
 
