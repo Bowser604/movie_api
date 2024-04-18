@@ -28,7 +28,7 @@ module.exports = (router) => {
                     if (error) {
                         res.send(error);
                     }
-                    let token = generateJWTToken(user());
+                    let token = generateJWTToken(user);
                     return res.json({ user, token });
                 });
             })(req, res);
