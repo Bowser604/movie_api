@@ -527,3 +527,4 @@
 ::1 - - [18/Apr/2024:16:13:49 +0000] "GET /users HTTP/1.1" 500 1467 "-" "PostmanRuntime/7.37.3"
 ::1 - - [18/Apr/2024:16:25:33 +0000] "GET /users HTTP/1.1" 500 1467 "-" "PostmanRuntime/7.37.3"
 ::1 - - [18/Apr/2024:16:36:43 +0000] "GET /users HTTP/1.1" 500 1467 "-" "PostmanRuntime/7.37.3"
+::1 - - [19/Apr/2024:04:52:54 +0000] "GET /users HTTP/1.1" 201 1786 "-" "PostmanRuntime/7.37.3"
