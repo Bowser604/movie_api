@@ -16,8 +16,10 @@ let generateJWTToken = (user) => {
 /* POST login. */
 module.exports = (router) => {
     router.post('/login', (req, res) => {
+        console.log('Inside /login route');
         passport.authenticate('local', { session: false }, 
             (error, user) => {
+                console.log('Inside passport.authenticate callback');
                 if (error || !user) {
                     return res.status(400).json({
                         message: 'Something is not right',
@@ -26,11 +28,14 @@ module.exports = (router) => {
                 }
                 req.login(user, { session: false }, (error) => {
                     if (error) {
+                        console.log('Error during login:', error);
                         res.send(error);
                     }
                     let token = generateJWTToken(user.toJSON());
+                    console.log('Generated token:', token);
                     return res.json({ user, token });
                 });
             })(req, res);
         });
     }
+ 
