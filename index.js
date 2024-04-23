@@ -72,29 +72,32 @@ app.get("/users", passport.authenticate('jwt', { session: false }), async (req, 
 app.put("/users/:Username", passport.authenticate('jwt', { session: false }),
  async (req, res) => {
     // Condition to check added here
-    if(req.user.Username !== req.params.Username){
+    if (req.user.Username !== req.params.Username) {
       return res.status(400).send('Permission denied');
     }
     // // Condition ends
     await Users.findOneAndUpdate(
-      { Username: req.params.Username }, {
+      { Username: req.params.Username }, 
+      {
         $set: 
         {
           Username: req.body.Username, 
           Password: req.body.Password,
           Email: req.body.Email,
           Birthday: req.body.Birthday
-        }
+        },
       },
       { new: true }
-    .then((updatedUser) => {
+    )
+      .then((updatedUser) => {
         res.json(updatedUser);
     })
     .catch ((err) => {
         console.error(err);
         res.status(500).send("Error: " + err);
-      }))
-  });
+      });
+    }
+  );
 
 
 // CREATE favorite movie to user
