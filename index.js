@@ -282,6 +282,7 @@ app.get(
   res.send("This is a secret URL with super top-secret content.");
 });
 
-
-app.listen(8080, () => console.log("listening on 8080"));
-
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
+});
