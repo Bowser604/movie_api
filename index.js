@@ -13,10 +13,20 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
 
-mongoose.connect("mongodb://localhost:27017/[Movies]", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+// mongoose.connect("mongodb://localhost:27017/[Movies]", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+// mongoose.connect("mongodb+srv://Bowser604:Tiberius604@cluster0.9l61s4s.mongodb.net/myFlixDB?retryWrites=true&w=majority&appName=Cluster0", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
+mongoose.connect( process.env.CONNECTION_URI, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
 });
+
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -116,8 +126,7 @@ app.put(
     await Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
-        $set:
-        {
+        $set: {
           Username: req.body.Username,
           Password: req.body.Password,
           Email: req.body.Email,
@@ -210,22 +219,14 @@ app.get(
 });
 
 // READ all movies
-<<<<<<< HEAD
-app.get("/movies", passport.authenticate('jwt', { session: false }), async (req, res) => {
-  await Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((err) => {
-=======
 app.get(
-  "/movies", async (req, res) => {
+  "/movies", passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
     await Movies.find()
       .then((movies) => {
         res.status(201).json(movies);
       })
       .catch((err) => {
->>>>>>> 2.10
       console.error(err);
       res.status(500).send("Error: " + err);
     });
