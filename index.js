@@ -7,7 +7,13 @@ const fs = require("fs");
 const path = require("path");
 const Movies = Models.Movie;
 const Users = Models.User;
+const passport = require("passport");
+
+
+const bcrypt = require("bcrypt");
 const { check, validationResult } = require('express-validator');
+
+
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
@@ -26,6 +32,7 @@ mongoose.connect("mongodb://localhost:27017/[Movies]", {
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 app.use(cors({
@@ -51,47 +58,71 @@ app.use(morgan("combined", { stream: accessLogStream }));
 app.post(
   "/users",
   [
-    check('Username', 'Username is required').isLength({min: 3}),
+    check('Username', 'Username is required').notEmpty().isLength({ min: 3 }),
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty(),
+    check('Password', 'Password is required').notEmpty(),
     check('Email', 'Email does not appear to be valid').isEmail()
   ], 
   async (req, res) => {
 
     // check the validation object for errors
     let errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
+     
+    try {
+      //Destruture requesst body
+      const { Username, Password, Email, Birthdate } = req.body; 
 
-  let hashedPassword = Users.hashPassword(req.body.Password);
-  await Users.findOne({ Username: req.body.Username })
-    .then((user) => {
-      if (user) {
-        return res.status(400).send(req.body.Username + "already exists");
-      } else {
-        Users
-          .create({
-            Username: req.body.Username,
-            Password: req.body.Password,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday
-          })
-          .then((user) => {
-            res.status(201).json(user);
-          })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send("Error: " + error);
-          });
+      // Check if the user already exists
+      const existingUser = await Users.findOne({ Username: Username });
+      
+      if (existingUser) {
+        return res.status(400).send(Username + " already exist");
       }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error: " + error);
+      
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(Password, 10);
+
+      // Create new user with hashed password
+      const newUser = await Users.create({
+        username: Username,
+        password: hashedPassword,
+        email: Email,
+        birthdate: Birthdate
+      )};
+      
+      res.status(201).json(newUser);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
     });
-});
+    
+
+//   let hashedPassword = Users.hashPassword(req.body.Password);
+//   await Users.findOne({ Username: req.body.Username })
+//     .then((user) => {
+//       if (user) {
+//         return res.status(400).send(req.body.Username + "already exists");
+//       } else {
+//         Users
+//           .create({
+//             Username: req.body.Username,
+//             Password: req.body.Password,
+//             Email: req.body.Email,
+//             Birthday: req.body.Birthday
+//           })
+//           .then((user) => {
+//             res.status(201).json(user);
+//           })
+//       }
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       res.status(500).send("Error: " + error);
+//     });
+// });
 
 // GET all users
 app.get(
