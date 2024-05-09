@@ -15,6 +15,7 @@ const { check, validationResult } = require('express-validator');
 
 
 
+const bcrypt = require("bcrypt");
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
