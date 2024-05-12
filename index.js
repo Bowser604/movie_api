@@ -8,8 +8,11 @@ const path = require("path");
 const Movies = Models.Movie;
 const Users = Models.User;
 const { check, validationResult } = require('express-validator');
-
 const bcrypt = require("bcrypt");
+const cors = require('cors');
+const passport = require('passport');
+require('./passport');
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
@@ -27,6 +30,8 @@ mongoose.connect("mongodb://localhost:27017/[Movies]", {
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(morgan("combined", { stream: accessLogStream }));
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 app.use(cors({
@@ -40,13 +45,13 @@ app.use(cors({
   }
 }));
 
-const cors = require('cors');
-app.use(cors());
+// const cors = require('cors');
+// app.use(cors());
 let auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
+// const passport = require('passport');
+// require('./passport');
 
-app.use(morgan("combined", { stream: accessLogStream }));
+
 
 // CREATE a user
 app.post(
@@ -61,38 +66,33 @@ app.post(
 
     // check the validation object for errors
     let errors = validationResult(req);
-
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
 
-  let hashedPassword = Users.hashPassword(req.body.Password);
-  await Users.findOne({ Username: req.body.Username })
-    .then((user) => {
-      if (user) {
-        return res.status(400).send(req.body.Username + "already exists");
-      } else {
-        Users
-          .create({
-            Username: req.body.Username,
-            Password: req.body.Password,
-            Email: req.body.Email,
-            Birthday: req.body.Birthday
-          })
-          .then((user) => {
-            res.status(201).json(user);
-          })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send("Error: " + error);
-          });
+    try {
+      const { Username, Password, Email, Birthday } = req.body;
+    
+      const existingUser = await Users.findOne({ Username });
+      if (existingUser) {
+        return res.status(400).send(Username + " already exists");
       }
-    })
-    .catch((error) => {
+    
+      const hashedPassword = await bcrypt.hash(Password, 10);
+      const newUser = await Users.create({
+        Username,
+        Password: hashedPassword,
+        Email,
+        Birthday
+      });
+
+      res.status(201).json(newUser);
+    } catch (error) {
       console.error(error);
       res.status(500).send("Error: " + error);
-    });
-});
+    }
+  });
+
 
 // GET all users
 app.get(
@@ -113,36 +113,42 @@ app.get(
 // UPDATE user info
 app.put(
   "/users/:Username",
+  [
+    // Input validation
+    check('Username', 'Username is required').isLength({min: 3}),
+    check('Username', 'Username contains non alphanumeric characters not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ],
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
-    // Condition to check added here
-    if (req.user.Username !== req.params.Username) {
-      return res.status(400).send('Permission denied');
+    // Check validation for errors
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({errors: errors.array()});
     }
-    // Condition ends
-    await Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      {
-        $set:
-        {
+    
+    try {
+      const updatedUser = await Users.findOneAndUpdate(
+       { Username: req.params.Username },
+       {
+        $set: {
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: await bcrypt.hash(req.body.Password, 10),
           Email: req.body.Email,
           Birthday: req.body.Birthday
-        },
-      },
-      { new: true }
-    )
-      .then((updatedUser) => {
-        res.json(updatedUser);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-      });
+        }
+       },
+       { new: true }
+      );
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    }
   }
 );
-
+   
 
 // CREATE favorite movie to user
 app.post(
@@ -292,5 +298,5 @@ app.get(
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
- console.log('Listening on Port ' + port);
+  console.log('Listening on Port ' + port);
 });
