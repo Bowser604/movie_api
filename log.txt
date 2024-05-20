@@ -615,3 +615,4 @@
 127.0.0.1 - - [12/May/2024:17:56:22 +0000] "GET /movies HTTP/1.1" 201 7004 "-" "PostmanRuntime/7.38.0"
 127.0.0.1 - - [12/May/2024:17:56:57 +0000] "POST /users/Jane/65ef7b1730d32340e8b98951 HTTP/1.1" 404 175 "-" "PostmanRuntime/7.38.0"
 127.0.0.1 - - [12/May/2024:17:57:08 +0000] "POST /users/Jane/movies/65ef7b1730d32340e8b98951 HTTP/1.1" 200 4 "-" "PostmanRuntime/7.38.0"
+127.0.0.1 - - [12/May/2024:18:26:12 +0000] "POST /users/Jane/movies/65ef7b1730d32340e8b98951 HTTP/1.1" 200 4 "-" "PostmanRuntime/7.38.0"

@@ -117,34 +117,44 @@ app.put(
     // Input validation
     check('Username', 'Username is required').isLength({min: 3}),
     check('Username', 'Username contains non alphanumeric characters not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty(),
+    check('Password', 'Password is required').notEmpty(),
+    check('Password', 'Password must be at least 6 characters long').isLength({ min: 6 }),
     check('Email', 'Email does not appear to be valid').isEmail()
   ],
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
-    // Check validation for errors
-    let errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({errors: errors.array()});
-    }
-    
     try {
+      // Check validation for errors
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(422).json({errors: errors.array()});
+      }
+    
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(req.body.Password, 10);
+
+      // Update user info
       const updatedUser = await Users.findOneAndUpdate(
        { Username: req.params.Username },
        {
         $set: {
           Username: req.body.Username,
-          Password: await bcrypt.hash(req.body.Password, 10),
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         }
        },
        { new: true }
       );
+      
+      if (!updatedUser) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
       res.status(200).json(updatedUser);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Error: " + error);
+      res.status(500).send("Error: " + error.message);
     }
   }
 );
