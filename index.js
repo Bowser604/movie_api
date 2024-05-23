@@ -12,6 +12,17 @@ const bcrypt = require("bcrypt");
 const cors = require('cors');
 const passport = require('passport');
 require('./passport');
+const cool = require('cool-ascii-faces')
+const PORT = process.env.PORT || 5001
+
+express()
+  .use(express.static(path.join(__dirname, 'public')))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
+  .get('/cool', (req, res) => res.send(cool()))
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
@@ -63,16 +74,13 @@ app.post(
     check('Email', 'Email does not appear to be valid').isEmail()
   ], 
   async (req, res) => {
-
-    // check the validation object for errors
-    let errors = validationResult(req);
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
 
     try {
       const { Username, Password, Email, Birthday } = req.body;
-    
       const existingUser = await Users.findOne({ Username });
       if (existingUser) {
         return res.status(400).send(Username + " already exists");
