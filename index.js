@@ -12,16 +12,16 @@ const bcrypt = require("bcrypt");
 const cors = require('cors');
 const passport = require('passport');
 require('./passport');
-const cool = require('cool-ascii-faces')
-const PORT = process.env.PORT || 5001
+// const cool = require('cool-ascii-faces')
+// const PORT = process.env.PORT || 5001
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  .get('/cool', (req, res) => res.send(cool()))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+// express()
+//   .use(express.static(path.join(__dirname, 'public')))
+//   .set('views', path.join(__dirname, 'views'))
+//   .set('view engine', 'ejs')
+//   .get('/', (req, res) => res.render('pages/index'))
+//   .get('/cool', (req, res) => res.send(cool()))
+//   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
@@ -29,8 +29,8 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
 });
 
 mongoose.connect("mongodb://localhost:27017/[Movies]", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true,
 });
 
 // mongoose.connect( process.env.CONNECTION_URI, { 
