@@ -12,34 +12,20 @@ const bcrypt = require("bcrypt");
 const cors = require('cors');
 const passport = require('passport');
 require('./passport');
-<<<<<<< HEAD
-// const cool = require('cool-ascii-faces')
-// const PORT = process.env.PORT || 5001
-
-// express()
-//   .use(express.static(path.join(__dirname, 'public')))
-//   .set('views', path.join(__dirname, 'views'))
-//   .set('view engine', 'ejs')
-//   .get('/', (req, res) => res.render('pages/index'))
-//   .get('/cool', (req, res) => res.send(cool()))
-//   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-=======
->>>>>>> parent of 6c6c008 (testing localhost)
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
 
-mongoose.connect("mongodb://localhost:27017/[Movies]", {
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true,
-});
-
-// mongoose.connect( process.env.CONNECTION_URI, { 
-//   useNewUrlParser: true, 
-//   useUnifiedTopology: true 
+// mongoose.connect("mongodb://localhost:27017/[Movies]", {
+//   // useNewUrlParser: true,
+//   // useUnifiedTopology: true,
 // });
+
+mongoose.connect( process.env.CONNECTION_URI, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+});
 
 const app = express();
 app.use(bodyParser.json());
