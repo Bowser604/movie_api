@@ -35,8 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("combined", { stream: accessLogStream }));
  
-// Added comment
-// blblblblblblblblbl
+
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 app.use(cors({
   origin: (origin, callback) => {
