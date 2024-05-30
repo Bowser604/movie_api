@@ -14,7 +14,7 @@ const bcrypt = require("bcrypt");
 const cors = require('cors');
 const passport = require('passport');
 require('./passport');
-
+const Movies = require('./models/movie'); 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
