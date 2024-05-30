@@ -14,20 +14,20 @@ const bcrypt = require("bcrypt");
 const cors = require('cors');
 const passport = require('passport');
 require('./passport');
-const Movies = require('./models/movie'); 
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
 
-mongoose.connect("mongodb+srv://Bowser604:Tiberius604@cluster0.9l61s4s.mongodb.net/myFlixDB?retryWrites=true&w=majority&appName=Cluster0", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-// mongoose.connect( process.env.CONNECTION_URI, { 
-//   useNewUrlParser: true, 
-//   useUnifiedTopology: true 
+// mongoose.connect("mongodb+srv://Bowser604:Tiberius604@cluster0.9l61s4s.mongodb.net/myFlixDB?retryWrites=true&w=majority&appName=Cluster0", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
 // });
+
+mongoose.connect( process.env.CONNECTION_URI, { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+});
 
 const app = express();
 app.use(bodyParser.json());
