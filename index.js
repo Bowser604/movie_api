@@ -58,7 +58,7 @@ let auth = require('./auth')(app);
 app.post(
   "/users",
   [
-    check('Username', 'Username is required').notEmpty().isLength({ min: 3 }),
+    check('Username', 'Username must be more then two characters').notEmpty().isLength({ min: 3 }),
     check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
     check('Password', 'Password is required').notEmpty(),
     check('Email', 'Email does not appear to be valid').isEmail()
