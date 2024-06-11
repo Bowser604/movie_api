@@ -7,19 +7,17 @@ const fs = require("fs");
 const path = require("path");
 const Movies = Models.Movie;
 const Users = Models.User;
-const passport = require("passport");
-
-
-const bcrypt = require("bcrypt");
 const { check, validationResult } = require('express-validator');
 
-
-
 const bcrypt = require("bcrypt");
+const cors = require('cors');
+const passport = require('passport');
+require('./passport');
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
-// gggggggggggggg
+
 mongoose.connect("mongodb://localhost:27017/[Movies]", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -28,12 +26,15 @@ mongoose.connect("mongodb://localhost:27017/[Movies]", {
 // mongoose.connect( process.env.CONNECTION_URI, { 
 //   useNewUrlParser: true, 
 //   useUnifiedTopology: true 
+// }).then(() => {
+//   console.log('Connected to MongoDB');
+// }).catch((error) => {
+//   console.error('Error connecting to MongoDB:', error.message);
 // });
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 app.use(cors({
@@ -47,13 +48,11 @@ app.use(cors({
   }
 }));
 
-const cors = require('cors');
-app.use(cors());
 let auth = require('./auth')(app);
-const passport = require('passport');
-require('./passport');
+// const passport = require('passport');
+// require('./passport');
 
-app.use(morgan("combined", { stream: accessLogStream }));
+
 
 // CREATE a user
 app.post(
@@ -71,59 +70,35 @@ app.post(
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-     
-    try {
-      //Destruture requesst body
-      const { Username, Password, Email, Birthdate } = req.body; 
 
-      // Check if the user already exists
-      const existingUser = await Users.findOne({ Username: Username });
-      
-      if (existingUser) {
-        return res.status(400).send(Username + " already exist");
+  let hashedPassword = Users.hashPassword(req.body.Password);
+  await Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + "already exists");
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) => {
+            res.status(201).json(user);
+          })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).send("Error: " + error);
+          });
       }
-      
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(Password, 10);
-
-      // Create new user with hashed password
-      const newUser = await Users.create({
-        username: Username,
-        password: hashedPassword,
-        email: Email,
-        birthdate: Birthdate
-      )};
-      
-      res.status(201).json(newUser);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error: " + err);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
     });
-    
+});
 
-//   let hashedPassword = Users.hashPassword(req.body.Password);
-//   await Users.findOne({ Username: req.body.Username })
-//     .then((user) => {
-//       if (user) {
-//         return res.status(400).send(req.body.Username + "already exists");
-//       } else {
-//         Users
-//           .create({
-//             Username: req.body.Username,
-//             Password: req.body.Password,
-//             Email: req.body.Email,
-//             Birthday: req.body.Birthday
-//           })
-//           .then((user) => {
-//             res.status(201).json(user);
-//           })
-//       }
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//       res.status(500).send("Error: " + error);
-//     });
-// });
 
 // GET all users
 app.get(
@@ -144,6 +119,14 @@ app.get(
 // UPDATE user info
 app.put(
   "/users/:Username",
+  [
+    // Input validation
+    check('Username', 'Username is required').isLength({min: 3}),
+    check('Username', 'Username contains non alphanumeric characters not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').notEmpty(),
+    check('Password', 'Password must be at least 6 characters long').isLength({ min: 6 }),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ],
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     // Condition to check added here
@@ -154,25 +137,29 @@ app.put(
     await Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
-        $set: {
+        $set:
+        {
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
-        },
-      },
-      { new: true }
-    )
-      .then((updatedUser) => {
-        res.json(updatedUser);
-      })
-      .catch((err) => {
-        console.error(err);
-        res.status(500).send("Error: " + err);
-      });
+        }
+       },
+       { new: true }
+      );
+      
+      if (!updatedUser) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error: " + error.message);
+    }
   }
 );
-
+   
 
 // CREATE favorite movie to user
 app.post(
@@ -322,5 +309,5 @@ app.get(
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
- console.log('Listening on Port ' + port);
+  console.log('Listening on Port ' + port);
 });
