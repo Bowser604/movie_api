@@ -129,6 +129,7 @@ app.put(
   ],
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
+    try {
     // Condition to check added here
     if (req.user.Username !== req.params.Username) {
       return res.status(400).send('Permission denied');
