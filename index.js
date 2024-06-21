@@ -7,16 +7,8 @@ const fs = require("fs");
 const path = require("path");
 const Movies = Models.Movie;
 const Users = Models.User;
-<<<<<<< Updated upstream
-=======
-const passport = require("passport");
-const bcrypt = require("bcrypt");
->>>>>>> Stashed changes
 const { check, validationResult } = require('express-validator');
-const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), { flags: "a" });
-const cors = require('cors'); 
 
-<<<<<<< Updated upstream
 const bcrypt = require("bcrypt");
 const cors = require('cors');
 const passport = require('passport');
@@ -26,8 +18,6 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
   flags: "a",
 });
 
-=======
->>>>>>> Stashed changes
 mongoose.connect("mongodb://localhost:27017/[Movies]", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -58,11 +48,6 @@ app.use(cors({
   }
 }));
 
-<<<<<<< Updated upstream
-=======
-
-app.use(cors());
->>>>>>> Stashed changes
 let auth = require('./auth')(app);
 // const passport = require('passport');
 // require('./passport');
@@ -107,35 +92,12 @@ app.post(
             res.status(500).send("Error: " + error);
           });
       }
-<<<<<<< Updated upstream
     })
     .catch((error) => {
       console.error(error);
       res.status(500).send("Error: " + error);
     });
 });
-=======
-      
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(Password, 10);
-
-      // Create new user with hashed password
-      const newUser = await Users.create({
-        Username: Username,
-        Password: hashedPassword,
-        Email: Email,
-        Birthdate: Birthdate
-    });
-    
-      res.status(201).json(newUser);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    }
-    }
-);
-    
->>>>>>> Stashed changes
 
 
 // GET all users
