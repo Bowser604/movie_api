@@ -11,7 +11,7 @@ const { check, validationResult } = require('express-validator');
 
 const bcrypt = require("bcrypt");
 const cors = require('cors');
-// const passport = require('passport');
+const passport = require('passport');
 require('./passport');
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
@@ -236,15 +236,16 @@ app.get(
 
 // READ all movies
 app.get(
-  "/movies",
+  "/movies", passport.authenticate('jwt', { session: false }),
   async (req, res) => {
-    try {
-    const movies = await Movies.find();
+    await Movies.find()
+      .then((movies) => { 
         res.status(201).json(movies);
-      } catch (err) {
+      })
+      .catch((err) => {
       console.error(err);
       res.status(500).send("Error: " + err);
-    }
+    });
   }
 );
 
