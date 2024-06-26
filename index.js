@@ -236,18 +236,18 @@ app.get(
 
 // READ all movies
 app.get(
-  "/movies", passport.authenticate('jwt', { session: false }),
+  "/movies",
   async (req, res) => {
-    await Movies.find()
-      .then((movies) => { 
+    try {
+    const movies = await Movies.find();
         res.status(201).json(movies);
-      })
-      .catch((err) => {
+      } catch (err) {
       console.error(err);
       res.status(500).send("Error: " + err);
-    });
+    }
   }
 );
+
 
 
 // READ movie info for specific title
