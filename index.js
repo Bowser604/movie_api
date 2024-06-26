@@ -2,21 +2,21 @@ const mongoose = require("mongoose");
 const Models = require("./models.js");
 const express = require("express");
 const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const fs = require("fs");
-const path = require("path");
+// const morgan = require("morgan");
+// const fs = require("fs");
+// const path = require("path");
 const Movies = Models.Movie;
 const Users = Models.User;
 const { check, validationResult } = require('express-validator');
 
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const cors = require('cors');
 const passport = require('passport');
 require('./passport');
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
-  flags: "a",
-});
+// const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
+//   flags: "a",
+// });
 
 mongoose.connect("mongodb://localhost:27017/[Movies]", {
   useNewUrlParser: true,
@@ -238,15 +238,15 @@ app.get(
 app.get(
   "/movies",
   async (req, res) => {
-    try {
-    const movies = await Movies.find();
+    await Movies.find()
+      .then((movies) => {
         res.status(201).json(movies);
-      } catch (err) {
+      })
+      .catch((err) => {
       console.error(err);
       res.status(500).send("Error: " + err);
-    }
-  }
-);
+    });
+  });
 
 
 // READ movie info for specific title
