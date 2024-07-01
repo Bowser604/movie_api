@@ -18,16 +18,17 @@ require('./passport');
 //   flags: "a",
 // });  
 
-
+ 
 
 // mongoose.connect("mongodb://localhost:27017/[Movies]", {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
 
-mongoose.connect( process.env.CONNECTION_URI, { 
+mongoose.connect(process.env.CONNECTION_URI, { 
   useNewUrlParser: true, 
-  useUnifiedTopology: true 
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 30000 
 }).then(() => {
   console.log('Connected to MongoDB');
 }).catch((error) => {
@@ -82,7 +83,7 @@ app.post(
         Users
           .create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
@@ -240,12 +241,14 @@ app.get(
 app.get(
   "/movies",
   async (req, res) => {
+    console.log("Received request for /movies");
     await Movies.find()
       .then((movies) => {
+        console.log("Movies fetched successfully");
         res.status(201).json(movies);
       })
       .catch((err) => {
-      console.error(err);
+      console.error("Error fetching movies:", err);
       res.status(500).send("Error: " + err);
     });
   });
