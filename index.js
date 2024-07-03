@@ -2,30 +2,33 @@ const mongoose = require("mongoose");
 const Models = require("./models.js");
 const express = require("express");
 const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const fs = require("fs");
-const path = require("path");
+// const morgan = require("morgan");
+// const fs = require("fs");
+// const path = require("path");
 const Movies = Models.Movie;
 const Users = Models.User;
 const { check, validationResult } = require('express-validator');
 
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const cors = require('cors');
 const passport = require('passport');
 require('./passport');
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
-  flags: "a",
-});
+// const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
+//   flags: "a",
+// });  
 
-// mongoose.connect("mongodb://localhost:27017/[Movies]", {
+ 
+
+// mongoose.connect("mongodb://127.0.0.1:27017/[Movies]", {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
 
-mongoose.connect( process.env.CONNECTION_URI, { 
+mongoose.connect(process.env.CONNECTION_URI, { 
   useNewUrlParser: true, 
-  useUnifiedTopology: true 
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 30000 
 }).then(() => {
   console.log('Connected to MongoDB');
 }).catch((error) => {
@@ -80,7 +83,7 @@ app.post(
         Users
           .create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
@@ -238,16 +241,17 @@ app.get(
 app.get(
   "/movies",
   async (req, res) => {
-    try {
-    const movies = await Movies.find();
+    console.log("Received request for /movies");
+    await Movies.find()
+      .then((movies) => {
+        console.log("Movies fetched successfully");
         res.status(201).json(movies);
-      } catch (err) {
-      console.error(err);
+      })
+      .catch((err) => {
+      console.error("Error fetching movies:", err);
       res.status(500).send("Error: " + err);
-    }
-  }
-);
-
+    });
+  });
 
 
 // READ movie info for specific title
