@@ -24,7 +24,7 @@ require('./passport');
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
-
+console.log("PROCESS ENV" + process.env.CONNECTION_URI)
 mongoose.connect(process.env.CONNECTION_URI, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
