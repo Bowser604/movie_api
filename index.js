@@ -39,7 +39,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+let allowedOrigins = ['http://localhost:8081', 'http://testsite.com'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
@@ -312,7 +312,7 @@ app.get(
   res.send("This is a secret URL with super top-secret content.");
 });
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
 app.listen(port, '0.0.0.0',() => {
   console.log('Listening on Port ' + port);
 });
