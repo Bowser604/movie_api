@@ -34,6 +34,9 @@ mongoose.connect(process.env.CONNECTION_URI, {
 }).catch((error) => {
   console.error('Error connecting to MongoDB:', error.message);
 });
+// 
+
+
 
 const app = express();
 app.use(bodyParser.json());
