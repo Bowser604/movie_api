@@ -20,21 +20,23 @@ require('./passport');
 
  
 
+
+
 // mongoose.connect("mongodb://127.0.0.1:27017/[Movies]", {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
 console.log("PROCESS ENV" + process.env.CONNECTION_URI)
-mongoose.connect(process.env.CONNECTION_URI, { 
+const dburl = process.env.DATEBASE_URL || 'mongodb://127.0.0.1:27017/[Movies]'
+mongoose.connect(dburl, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 30000 
 }).then(() => {
   console.log('Connected to MongoDB');
 }).catch((error) => {
   console.error('Error connecting to MongoDB:', error.message);
 });
-// 
+
 
 
 
