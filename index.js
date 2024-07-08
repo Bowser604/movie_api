@@ -26,8 +26,10 @@ require('./passport');
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
-console.log("PROCESS ENV" + process.env.CONNECTION_URI)
-const dburl = process.env.DATEBASE_URL || 'mongodb://127.0.0.1:27017/[Movies]'
+
+// Log the enviroment variable to check if it's correctly loading
+ 
+const dburl = process.env.CONNECTION_URL || 'mongodb://127.0.0.1:27017/[Movies]'
 mongoose.connect(dburl, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
