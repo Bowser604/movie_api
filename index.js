@@ -20,16 +20,6 @@ require('./passport');
 
    
 
-
-// mongoose.connect("mongodb+srv://Bowser604:Tiberius604@cluster0.9l61s4s.mongodb.net/myFlixDB?retryWrites=true&w=majority&appName=Cluster0", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-
-//// kkkkkkkk
-
-
 // mongoose.connect("mongodb://127.0.0.1:27017/[Movies]", {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
