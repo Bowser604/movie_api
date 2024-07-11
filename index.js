@@ -18,7 +18,15 @@ require('./passport');
 //   flags: "a",
 // });  
 
- 
+   
+
+
+// mongoose.connect("mongodb+srv://Bowser604:Tiberius604@cluster0.9l61s4s.mongodb.net/myFlixDB?retryWrites=true&w=majority&appName=Cluster0", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
+
 
 
 
@@ -30,6 +38,7 @@ require('./passport');
 // Log the enviroment variable to check if it's correctly loading
  
 const dburl = process.env.CONNECTION_URL || 'mongodb://127.0.0.1:27017/[Movies]'
+console.log("DBRUL" + dburl)
 mongoose.connect(dburl, { 
   useNewUrlParser: true, 
   useUnifiedTopology: true,
